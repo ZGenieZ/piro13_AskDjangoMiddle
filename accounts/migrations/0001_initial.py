@@ -38,5 +38,5 @@ class Migration(migrations.Migration):
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
-        migrations.RunPython(forward_func,backward_func), # 테이블이 만들어지자마자 forward_func, backward_func 호출
+        migrations.RunPython(forward_func,backward_func), # 테이블이 만들어지자마자 forward_func 호출
     ]

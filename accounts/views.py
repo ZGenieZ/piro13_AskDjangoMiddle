@@ -42,8 +42,11 @@ def signup(request):
             # form_valid() <= is.valid()가 참일때 호출되는 함수
             auth_login(request, user)
 
+            next_url = request.GET.get('next') or 'profile'     # 값이 없으면 값은 'profile'
+
             # return redirect(settings.LOGIN_URL)
-            return redirect('profile') # 로그인 후에 profile 창으로 이동
+            # return redirect('profile') # 로그인 후에 profile 창으로 이동
+            return redirect(next_url)
     else:
         form = SignupForm()    
     return render(request, 'accounts/signup.html',{
@@ -57,7 +60,9 @@ class SignupView(CreateView):
     template_name = 'accounts/signup.html'
 
     def get_success_url(self):
-        return resolve_url('profile')
+        next_url = self.request.GET.get('next') or 'profile'
+        # return resolve_url('profile')   # 리턴값을 redirect로 주면 HttpResponse가 반환되기때문에 url을 반환하는 resolve_url 사용 
+        return resolve_url(next_url)
 
     def form_valid(self,form):
         user = form.save()
